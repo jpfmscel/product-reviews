@@ -21,7 +21,7 @@ public class SystemVariablesProducerTest {
 
 	@Test
 	public void shouldFail_When_Key_Not_Provided_In_VM_Arguments() {
-		assertThat("Environment variable -Dkey.secret not PROVIDED!", StringUtils.isEmpty(secretKey),
+		assertThat("Environment variable key.secret not PROVIDED!", StringUtils.isEmpty(secretKey),
 				is(false));
 	}
 

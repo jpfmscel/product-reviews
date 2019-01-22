@@ -1,11 +1,18 @@
 package com.jp.authservice.repositories;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.Map;
 
-import com.jp.authservice.entities.Product;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-public interface ProductRepository extends MongoRepository<Product, String> {
+@Service
+public class ProductRepository{
 
-	public Product findByCode(String code);
+	public Object findById(String code) {
+		RestTemplate restTemplate = new RestTemplate();
+		String uri = "https://www.adidas.co.uk/api/products/" + code;
+		Object result = restTemplate.getForObject(uri, Map.class);
+		return result;
+	}
 
 }

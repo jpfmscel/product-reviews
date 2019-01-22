@@ -1,0 +1,1 @@
+cd product-service && ./mvnw clean package && cd review-service && ./mvnw clean package && cd auth-service && ./mvnw clean package

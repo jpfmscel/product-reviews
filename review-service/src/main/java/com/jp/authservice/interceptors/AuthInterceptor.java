@@ -45,6 +45,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		logger.info("Authorization header : " + authorization);
 		logger.info("Token : " + token);
 		try {
+			// TODO
 			authService.isTokenValid(token);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -4,10 +4,9 @@ FROM openjdk:8-jdk-alpine
 VOLUME /tmp
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8082
+EXPOSE 8080
 
 # Maven build is mandatory before copying jar file : $ ./mvnw clean package
-CMD ["./mvnw", "clean", "package"]
 
 # The application's jar file
 ARG JAR_FILE=target/product-service-0.0.1-SNAPSHOT.jar
