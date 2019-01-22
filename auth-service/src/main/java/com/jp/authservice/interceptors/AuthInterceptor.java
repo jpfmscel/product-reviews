@@ -57,8 +57,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	}
 
 	private boolean shouldVerifyToken(HandlerMethod handler) {
-		return Arrays.asList(handler.getMethod().getAnnotations()).parallelStream()
-				.anyMatch(an -> an.annotationType().equals(Secured.class));
+		return handler.getMethod().isAnnotationPresent(Secured.class);
 	}
 
 }
