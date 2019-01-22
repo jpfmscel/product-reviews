@@ -1,0 +1,19 @@
+FROM openjdk:8-jdk-alpine
+
+# Add a volume pointing to /tmp
+VOLUME /tmp
+
+# Make port 8080 available to the world outside this container
+EXPOSE 8083
+
+# Maven build is mandatory before copying jar file : $ ./mvnw clean package
+CMD ["./mvnw", "clean", "package"]
+
+# The application's jar file
+ARG JAR_FILE=target/review-service-0.0.1-SNAPSHOT.jar
+
+# Add the application's jar to the container
+ADD ${JAR_FILE} review-service.jar
+
+# Run the jar file 
+ENTRYPOINT ["java","-Dspring.data.mongodb.uri=mongodb://mongo/local","-Djava.security.egd=file:/dev/./urandom","-jar","/review-service.jar"]
