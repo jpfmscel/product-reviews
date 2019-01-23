@@ -1,4 +1,4 @@
-package com.jp.authservice.configuration;
+package com.adidas.reviewservice.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

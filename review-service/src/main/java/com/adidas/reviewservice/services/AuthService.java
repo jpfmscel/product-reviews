@@ -1,4 +1,4 @@
-package com.jp.authservice.services;
+package com.adidas.reviewservice.services;
 
 import org.springframework.stereotype.Service;
 

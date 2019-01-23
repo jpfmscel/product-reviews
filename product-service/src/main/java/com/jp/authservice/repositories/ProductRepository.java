@@ -2,11 +2,11 @@ package com.jp.authservice.repositories;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
-@Service
-public class ProductRepository{
+@Repository
+public class ProductRepository {
 
 	public Object findById(String code) {
 		RestTemplate restTemplate = new RestTemplate();

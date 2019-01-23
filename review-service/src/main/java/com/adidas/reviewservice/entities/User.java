@@ -1,4 +1,4 @@
-package com.jp.authservice.entities;
+package com.adidas.reviewservice.entities;
 
 import java.util.Date;
 

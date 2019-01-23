@@ -1,4 +1,4 @@
-package com.jp.authservice.exceptions;
+package com.adidas.reviewservice.exceptions;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,4 +1,4 @@
-package com.jp.authservice.exceptions;
+package com.adidas.reviewservice.exceptions;
 
 public class ConfigurationException extends Throwable {
 

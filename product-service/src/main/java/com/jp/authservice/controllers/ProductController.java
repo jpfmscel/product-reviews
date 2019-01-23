@@ -21,7 +21,7 @@ public class ProductController {
 	private ProductService service;
 
 	// @Secured
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes" })
 	@GetMapping(value = "/{id}")
 	public ResponseEntity findById(@PathVariable @NonNull String id) {
 		// try {
