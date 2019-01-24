@@ -21,9 +21,9 @@ jobs:
       MAVEN_OPTS: -Xmx3200m
     
     steps:
-      - checkout
+      - checkout:
 
-      - run : cd review-service/
+      - run : cd review-service/ && pwd && mvn clean package -DskipTests
       
       # Download and cache dependencies
       - restore_cache:
