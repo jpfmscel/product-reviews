@@ -7,9 +7,11 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +38,19 @@ public class ReviewController {
 	public ResponseEntity<Review> insertReview(@PathVariable String product_id, @RequestBody @Valid Review review) {
 		Review reviewInserted = repository.insert(review);
 		return ResponseEntity.ok(reviewInserted);
+	}
+
+	@PutMapping(value = "/{product_id}")
+	public ResponseEntity<Review> updateReview(@PathVariable String product_id, @RequestBody @Valid Review review) {
+		Review reviewInserted = repository.save(review);
+		return ResponseEntity.ok(reviewInserted);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@DeleteMapping(value = "/{product_id}/{id}")
+	public ResponseEntity deleteReview(@PathVariable String product_id, @PathVariable String id) {
+		repository.deleteById(id);
+		return ResponseEntity.ok().build();
 	}
 
 }
