@@ -40,6 +40,7 @@ public class ReviewController {
 		return ResponseEntity.ok(reviewInserted);
 	}
 
+	// @Secured
 	@PutMapping(value = "/{product_id}")
 	public ResponseEntity<Review> updateReview(@PathVariable String product_id, @RequestBody @Valid Review review) {
 		Review reviewInserted = repository.save(review);
