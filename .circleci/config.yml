@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd review-service/ && mvn clean package
+      - run : cd review-service/ && mvn clean package -DskipTests
       
       # Download and cache dependencies
 #      - restore_cache:
@@ -61,7 +61,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd auth-service/ && mvn clean package
+      - run : cd auth-service/ && mvn clean package -DskipTests
  
   build_product_service:
     docker:
@@ -82,7 +82,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd product-service/ && mvn clean package
+      - run : cd product-service/ && mvn clean package -DskipTests
  
 workflows:
   version: 2
