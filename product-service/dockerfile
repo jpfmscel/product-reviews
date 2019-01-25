@@ -1,18 +1,27 @@
 FROM openjdk:8-jdk-alpine
 
 # Add a volume pointing to /tmp
-VOLUME /tmp
+# VOLUME /tmp
+
+COPY pom.xml /opt/product-service/build/
+COPY mvnw /opt/product-service/build/
+ADD .mvn /opt/product-service/build/.mvn/
+ADD src /opt/product-service/build/src/
+
+WORKDIR /opt/product-service/build/
+
+RUN ./mvnw clean package -DskipTests
+
+
+FROM openjdk:8-jdk-alpine
+# Maven build is mandatory before copying jar file : $ ./mvnw clean package
+
+WORKDIR /opt/product-service/
+
+COPY --from=0 /opt/product-service/build/target/product-service-0.0.1-SNAPSHOT.jar product-service.jar
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Maven build is mandatory before copying jar file : $ ./mvnw clean package
-
-# The application's jar file
-ARG JAR_FILE=target/product-service-0.0.1-SNAPSHOT.jar
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} product-service.jar
-
 # Run the jar file 
-ENTRYPOINT ["java","-Dspring.data.mongodb.uri=mongodb://mongo/local","-Djava.security.egd=file:/dev/./urandom","-jar","/product-service.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","product-service.jar"]

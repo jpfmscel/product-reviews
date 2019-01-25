@@ -6,26 +6,15 @@ services:
       - 27017:27017
     volumes:
       - mongo:/data/db
-  auth-service:
-    build: ./auth-service/
-    ports:
-      - 8081:8080
-    environment:
-      MONGO_URI: 'mongodb://mongo/test'
-    depends_on:
-      - mongo           
   product-service:
     build: ./product-service/
-    environment: 
-      - "MONGO_URI:mongodb://mongo/test"
     ports:
       - 8082:8080
-    depends_on:
-      - mongo
   review-service:
     build: ./review-service/
     environment: 
-      - "MONGO_URI:mongodb://mongo/test"
+      MONGO_HOST: "mongo"
+      MONGO_URI: "mongodb://mongo/test"
     ports:
       - 8083:8080
     depends_on:
