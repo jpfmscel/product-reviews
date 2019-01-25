@@ -1,12 +1,18 @@
 version: "3"
 services:
+  mongo:
+    image: mongo:3.6.3-jessie
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
   auth-service:
     build: ./auth-service/
     ports:
       - 8081:8080
     environment:
       MONGO_URI: 'mongodb://mongo/test'
-    links:
+    depends_on:
       - mongo           
   product-service:
     build: ./product-service/
@@ -14,7 +20,7 @@ services:
       - "MONGO_URI:mongodb://mongo/test"
     ports:
       - 8082:8080
-    links:
+    depends_on:
       - mongo
   review-service:
     build: ./review-service/
@@ -22,13 +28,8 @@ services:
       - "MONGO_URI:mongodb://mongo/test"
     ports:
       - 8083:8080
-    links:
+    depends_on:
       - mongo
-  mongo:
-    image: mongo:3.6.3-jessie
-    ports:
-      - 27017:27017
-    volumes:
-      - mongo:/data/db
+  
 volumes: 
   mongo: 
