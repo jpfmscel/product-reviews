@@ -1,9 +1,11 @@
-package com.jp.authservice.services;
+package com.adidas.productservice.services;
+
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jp.authservice.repositories.ProductRepository;
+import com.adidas.productservice.repositories.ProductRepository;
 
 @Service
 public class ProductService {
@@ -11,7 +13,7 @@ public class ProductService {
 	@Autowired
 	protected ProductRepository repository;
 
-	public Object findById(String id){
+	public HashMap findById(String id) {
 		return repository.findById(id);
 	}
 

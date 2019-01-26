@@ -1,4 +1,4 @@
-package com.adidas.test;
+package com.adidas.reviewservice.test;
 
 import static org.junit.Assert.assertTrue;
 

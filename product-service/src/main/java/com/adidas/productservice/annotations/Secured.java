@@ -1,4 +1,4 @@
-package com.jp.authservice.annotations;
+package com.adidas.productservice.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

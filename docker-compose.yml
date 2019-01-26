@@ -10,6 +10,9 @@ services:
     build: ./product-service/
     ports:
       - 8082:8080
+    environment:
+      MICROSERVICE_REVIEW_HOST: "http://localhost"
+      MICROSERVICE_REVIEW_PORT: "8083"
   review-service:
     build: ./review-service/
     environment: 

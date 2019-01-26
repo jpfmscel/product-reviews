@@ -1,4 +1,4 @@
-package com.jp.authservice.configuration;
+package com.adidas.productservice.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

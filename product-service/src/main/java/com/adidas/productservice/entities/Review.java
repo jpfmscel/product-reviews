@@ -1,4 +1,4 @@
-package com.jp.authservice.entities;
+package com.adidas.productservice.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

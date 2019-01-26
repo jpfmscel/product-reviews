@@ -1,4 +1,4 @@
-package com.jp.authservice.entities;
+package com.adidas.productservice.entities;
 
 import java.util.List;
 

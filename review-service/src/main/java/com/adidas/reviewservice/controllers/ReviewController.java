@@ -27,6 +27,12 @@ public class ReviewController {
 	@Autowired
 	private ReviewRepository repository;
 
+	@GetMapping
+	public ResponseEntity<List<Review>> getReviews() {
+		List<Review> productReviews = repository.findAll();
+		return ResponseEntity.ok(productReviews);
+	}
+
 	@GetMapping(value = "/{product_id}")
 	public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable @NotNull String product_id) {
 		List<Review> productReviews = repository.findByProductId(product_id);
@@ -34,22 +40,22 @@ public class ReviewController {
 	}
 
 	// @Secured
-	@PostMapping(value = "/{product_id}")
-	public ResponseEntity<Review> insertReview(@PathVariable String product_id, @RequestBody @Valid Review review) {
+	@PostMapping
+	public ResponseEntity<Review> insertReview(@RequestBody @Valid Review review) {
 		Review reviewInserted = repository.insert(review);
 		return ResponseEntity.ok(reviewInserted);
 	}
 
 	// @Secured
-	@PutMapping(value = "/{product_id}")
-	public ResponseEntity<Review> updateReview(@PathVariable String product_id, @RequestBody @Valid Review review) {
+	@PutMapping
+	public ResponseEntity<Review> updateReview(@RequestBody @Valid Review review) {
 		Review reviewInserted = repository.save(review);
 		return ResponseEntity.ok(reviewInserted);
 	}
 
 	@SuppressWarnings("rawtypes")
-	@DeleteMapping(value = "/{product_id}/{id}")
-	public ResponseEntity deleteReview(@PathVariable String product_id, @PathVariable String id) {
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity deleteReview(@PathVariable String id) {
 		repository.deleteById(id);
 		return ResponseEntity.ok().build();
 	}

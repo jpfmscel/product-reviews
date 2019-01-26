@@ -1,1 +1,3 @@
-./mvnw clean package
+#!/bin/sh
+ls
+#./mvnw clean package
