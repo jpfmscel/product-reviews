@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd review-service/ && mvn clean package
+      - run : cd review-service/ && mvn clean package -X
       
       # Download and cache dependencies
 #      - restore_cache:
@@ -61,7 +61,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd product-service/ && mvn clean package
+      - run : cd product-service/ && mvn clean package -X
  
 workflows:
   version: 2
