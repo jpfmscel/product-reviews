@@ -7,12 +7,12 @@ jobs:
   build_review_service:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:8u171-jdk
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mongo:3.6.3-jessie
+      #- image: circleci/mongo:3.6.3-jessie
 
     working_directory: ~/repo
 
@@ -45,12 +45,12 @@ jobs:
   build_product_service:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:8u171-jdk
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mongo:3.6.3-jessie
+      #- image: circleci/mongo:3.6.3-jessie
 
     working_directory: ~/repo
 
