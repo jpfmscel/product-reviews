@@ -23,7 +23,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd review-service/ && mvn clean package -DskipTests
+      - run : cd review-service/ && mvn clean package
       
       # Download and cache dependencies
 #      - restore_cache:
@@ -42,27 +42,6 @@ jobs:
       # run tests!
 #      - run: mvn integration-test
 
-  build_auth_service:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mongo:3.6.3-jessie
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
-    
-    steps:
-      - checkout:
-
-      - run : cd auth-service/ && mvn clean package -DskipTests
- 
   build_product_service:
     docker:
       # specify the version you desire here
@@ -82,7 +61,7 @@ jobs:
     steps:
       - checkout:
 
-      - run : cd product-service/ && mvn clean package -DskipTests
+      - run : cd product-service/ && mvn clean package
  
 workflows:
   version: 2
@@ -90,4 +69,3 @@ workflows:
     jobs:
     - build_review_service
     - build_product_service
-    - build_auth_service
