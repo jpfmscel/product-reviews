@@ -13,6 +13,8 @@ services:
     environment:
       MICROSERVICE_REVIEW_HOST: "http://localhost"
       MICROSERVICE_REVIEW_PORT: "8083"
+    depends_on:
+      - review-service
   review-service:
     build: ./review-service/
     environment: 

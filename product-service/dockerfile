@@ -20,7 +20,7 @@ WORKDIR /opt/product-service/
 COPY --from=0 /opt/product-service/build/target/product-service-0.0.1-SNAPSHOT.jar product-service.jar
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8443
+EXPOSE 8080
 
 # Run the jar file 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","product-service.jar"]

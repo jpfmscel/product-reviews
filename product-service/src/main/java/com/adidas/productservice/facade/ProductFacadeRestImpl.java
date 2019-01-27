@@ -1,4 +1,4 @@
-package com.adidas.productservice.repositories;
+package com.adidas.productservice.facade;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,19 +11,19 @@ import java.time.Duration;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Repository
-public class ProductRepository {
+@Component
+public class ProductFacadeRestImpl implements ProductFacade {
 
 	private static final String API_PRODUCTS = "https://www.adidas.co.uk/api/products/";
 
 	@Autowired
 	private ObjectMapper jacksonObjectMapper;
 
-	public HashMap findById(String code) {
+	public HashMap getProduct(String code) {
 		String uri = API_PRODUCTS + code;
 
 		try {
@@ -32,13 +32,13 @@ public class ProductRepository {
 			HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
 			String response = client.send(request, BodyHandlers.ofString(Charset.forName("UTF-8"))).body();
 			HashMap readValue = jacksonObjectMapper.readValue(response, HashMap.class);
-
 			return readValue;
 		} catch (IOException | InterruptedException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 
 		return null;
+
 	}
 
 }

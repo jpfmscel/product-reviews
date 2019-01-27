@@ -20,7 +20,7 @@ public class ServiceDiscoveryTest {
 	ServiceDiscovery serviceDiscovery;
 
 	@Test
-	public void shouldPass_whenProductMicroserviceHostAndPortAreSetInDockerCompose() throws ConfigurationException {
+	public void shouldPass_whenReviewMicroserviceHostAndPortAreSetInDockerCompose() throws ConfigurationException {
 		assertNotNull("Review microservice host or port not set.", serviceDiscovery.getMicroserviceBaseURL("review"));
 	}
 
