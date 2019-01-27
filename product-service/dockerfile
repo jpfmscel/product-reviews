@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11.0.2-jdk-oracle
 
 # Add a volume pointing to /tmp
 # VOLUME /tmp
@@ -12,8 +12,7 @@ WORKDIR /opt/product-service/build/
 
 RUN ./mvnw clean package -DskipTests
 
-
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11.0.2-jdk-oracle
 # Maven build is mandatory before copying jar file : $ ./mvnw clean package
 
 WORKDIR /opt/product-service/
@@ -21,7 +20,7 @@ WORKDIR /opt/product-service/
 COPY --from=0 /opt/product-service/build/target/product-service-0.0.1-SNAPSHOT.jar product-service.jar
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+EXPOSE 8443
 
 # Run the jar file 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","product-service.jar"]
