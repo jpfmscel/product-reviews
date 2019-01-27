@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adidas.reviewservice.dto.ReviewsDTO;
 import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.repositories.ReviewRepository;
+import com.adidas.reviewservice.services.ReviewService;
 
 //@Secured
 @RestController
@@ -27,6 +29,9 @@ public class ReviewController {
 	@Autowired
 	private ReviewRepository repository;
 
+	@Autowired
+	private ReviewService service;
+
 	@GetMapping
 	public ResponseEntity<List<Review>> getReviews() {
 		List<Review> productReviews = repository.findAll();
@@ -34,9 +39,9 @@ public class ReviewController {
 	}
 
 	@GetMapping(value = "/{product_id}")
-	public ResponseEntity<List<Review>> getReviewsByProductId(@PathVariable @NotNull String product_id) {
-		List<Review> productReviews = repository.findByProductId(product_id);
-		return ResponseEntity.ok(productReviews);
+	public ResponseEntity<ReviewsDTO> getReviewsByProductId(@PathVariable @NotNull String product_id) {
+		ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(product_id);
+		return ResponseEntity.ok(reviewsGeneralData);
 	}
 
 	// @Secured

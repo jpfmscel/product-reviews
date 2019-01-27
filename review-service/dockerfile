@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:11.0.2-jdk-oracle
 
 # Add a volume pointing to /tmp
 # VOLUME /tmp
