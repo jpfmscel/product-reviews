@@ -12,6 +12,11 @@ SpringBoot application for products and reviews
 - Swagger documentation available at **/swagger-ui.html**
 - JUnit and Embedded MongoDB for unit and integration testing
 
+## Startup
+Navigate to the folder containing the docker-compose.yml file and run the following commands:  
+
+```$ docker-compose build && docker-compose up```
+
 ## Docs
 - Swagger documentation available for both services
   - Product service : http://localhost:8082/swagger-ui.html
