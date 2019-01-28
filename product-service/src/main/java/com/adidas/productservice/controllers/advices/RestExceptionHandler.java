@@ -1,4 +1,4 @@
-package com.adidas.reviewservice.controllers.advices;
+package com.adidas.productservice.controllers.advices;
 
 import java.util.Arrays;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.adidas.reviewservice.dto.GenericResponse;
-import com.adidas.reviewservice.exceptions.ConfigurationException;
-import com.adidas.reviewservice.exceptions.EntityNotFoundException;
+import com.adidas.productservice.dto.GenericResponse;
+import com.adidas.productservice.exceptions.ConfigurationException;
+import com.adidas.productservice.exceptions.EntityNotFoundException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {

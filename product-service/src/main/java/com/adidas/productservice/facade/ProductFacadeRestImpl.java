@@ -13,6 +13,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.adidas.productservice.exceptions.EntityNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -23,7 +24,7 @@ public class ProductFacadeRestImpl implements ProductFacade {
 	@Autowired
 	private ObjectMapper jacksonObjectMapper;
 
-	public HashMap getProduct(String code) {
+	public HashMap getProduct(String code) throws EntityNotFoundException {
 		String uri = API_PRODUCTS + code;
 
 		try {
@@ -32,13 +33,17 @@ public class ProductFacadeRestImpl implements ProductFacade {
 			HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
 			String response = client.send(request, BodyHandlers.ofString(Charset.forName("UTF-8"))).body();
 			HashMap readValue = jacksonObjectMapper.readValue(response, HashMap.class);
+
+			if (readValue.get("message") != null) {
+				throw new EntityNotFoundException();
+			}
+
 			return readValue;
 		} catch (IOException | InterruptedException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 
 		return null;
-
 	}
 
 }

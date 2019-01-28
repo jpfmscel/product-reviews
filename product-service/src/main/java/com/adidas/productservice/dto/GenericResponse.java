@@ -1,4 +1,6 @@
-package com.adidas.reviewservice.dto;
+package com.adidas.productservice.dto;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +13,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewsDTO {
-	private String productId;
-	private Double averageScore;
-	private Long quantity;
+public class GenericResponse {
+
+	private String status;
+	private Integer code;
+	private List<String> messages;
+	private Object result;
+	
 }

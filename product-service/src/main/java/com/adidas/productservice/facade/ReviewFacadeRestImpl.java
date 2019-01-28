@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.adidas.productservice.discovery.ServiceDiscovery;
 import com.adidas.productservice.exceptions.ConfigurationException;
+import com.adidas.productservice.exceptions.EntityNotFoundException;
 
 @Component
 public class ReviewFacadeRestImpl implements ReviewFacade {
@@ -17,19 +18,19 @@ public class ReviewFacadeRestImpl implements ReviewFacade {
 	private ServiceDiscovery serviceDiscovery;
 
 	@Override
-	public HashMap getReviews(String productId) {
+	public HashMap getReviews(String productId) throws EntityNotFoundException, ConfigurationException {
 
 		String microserviceBaseURL;
-		try {
-			microserviceBaseURL = serviceDiscovery.getMicroserviceBaseURL("review");
-			ResponseEntity<HashMap> response = new RestTemplate().getForEntity(microserviceBaseURL + "/" + productId,
-					HashMap.class);
-			return response.getBody();
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		}
+		microserviceBaseURL = serviceDiscovery.getMicroserviceBaseURL("review");
+		ResponseEntity<HashMap> response = new RestTemplate().getForEntity(microserviceBaseURL + "/" + productId,
+				HashMap.class);
 
-		return null;
+		if (response.getBody().get("result") == null) {
+			throw new EntityNotFoundException();
+		}
+		
+		return response.getBody();
+
 	}
 
 }

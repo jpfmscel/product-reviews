@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,11 +24,12 @@ import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.repositories.ReviewRepository;
 import com.adidas.reviewservice.services.ReviewService;
+import com.adidas.reviewservice.util.GenericResponseUtils;
 
 //@Secured
 @RestController
 @RequestMapping(path = "/api/review")
-public class ReviewController implements GenericController {
+public class ReviewController {
 
 	@Autowired
 	private ReviewRepository repository;
@@ -41,40 +43,39 @@ public class ReviewController implements GenericController {
 		if (!productReviews.isPresent()) {
 			throw new EntityNotFoundException();
 		}
-		return ResponseEntity.ok(buildGenericResponseOK(productReviews.get()));
+		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(productReviews.get()));
 	}
 
-//	@Cacheable(value = "reviews", key = "#productId")
+	@Cacheable(value = "reviews", key = "#productId")
 	@GetMapping(value = "/{productId}")
 	public ResponseEntity<GenericResponse> getReviewsByProductId(@PathVariable @NotNull String productId) {
 		try {
 			ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(productId);
-			return ResponseEntity.ok(buildGenericResponseOK(reviewsGeneralData));
+			return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(reviewsGeneralData));
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body(buildGenericResponseError(e));
+			return ResponseEntity.badRequest().body(GenericResponseUtils.buildGenericResponseError(e));
 		}
 	}
 
 	// @Secured
 	@PostMapping
-	public ResponseEntity<Review> insertReview(@RequestBody @Valid Review review) {
+	public ResponseEntity<GenericResponse> insertReview(@RequestBody @Valid Review review) {
 		Review reviewInserted = repository.insert(review);
-		return ResponseEntity.ok(reviewInserted);
+		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(reviewInserted));
 	}
 
 	// @Secured
 	@PutMapping
-	public ResponseEntity<Review> updateReview(@RequestBody @Valid Review review) {
-		Review reviewInserted = repository.save(review);
-		return ResponseEntity.ok(reviewInserted);
+	public ResponseEntity<GenericResponse> updateReview(@RequestBody @Valid Review review) {
+		Review reviewUpdated = repository.save(review);
+		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(reviewUpdated));
 	}
 
-	@SuppressWarnings("rawtypes")
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity deleteReview(@PathVariable String id) {
+	public ResponseEntity<GenericResponse> deleteReview(@PathVariable String id) {
 		repository.deleteById(id);
-		return ResponseEntity.ok(buildGenericResponseOK("Deleted Review with id : " + id));
+		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK("Deleted Review with id : " + id));
 	}
 
 }

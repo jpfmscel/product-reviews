@@ -6,22 +6,15 @@ services:
       - 27017:27017
     volumes:
       - mongo:/data/db
-  redis:
-    image: redis:5-alpine
-    ports:
-      - 6379:6379
-    volumes:
-      - redis:/redis
   product-service:
     build: ./product-service/
     ports:
       - 8082:8082
     environment:
-      MICROSERVICE_REVIEW_HOST: "http://localhost"
+      MICROSERVICE_REVIEW_HOST: "http://review-service"
       MICROSERVICE_REVIEW_PORT: "8083"
     depends_on:
       - review-service
-      - redis
   review-service:
     build: ./review-service/
     environment: 
@@ -31,8 +24,6 @@ services:
       - 8083:8083
     depends_on:
       - mongo
-      - redis
   
 volumes: 
   mongo: 
-  redis:

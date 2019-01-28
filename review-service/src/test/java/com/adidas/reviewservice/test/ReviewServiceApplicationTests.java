@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.adidas.reviewservice.ReviewServiceApplication;
 import com.adidas.reviewservice.dto.ReviewsDTO;
 import com.adidas.reviewservice.entities.Review;
+import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.repositories.ReviewRepository;
 import com.adidas.reviewservice.services.ReviewService;
 
@@ -61,7 +62,7 @@ public class ReviewServiceApplicationTests {
 	}
 
 	@Test
-	public void d_getReviewsGeneralData() {
+	public void d_getReviewsGeneralData() throws EntityNotFoundException {
 		ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(review.getProductId());
 
 		assertTrue("Product ID is not the same.", reviewsGeneralData.getProductId().equals(review.getProductId()));

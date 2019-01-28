@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.adidas.productservice.exceptions.EntityNotFoundException;
 import com.adidas.productservice.facade.ProductFacade;
 
 @Service
@@ -15,7 +16,7 @@ public class ProductService {
 	@Qualifier("productFacadeRestImpl")
 	protected ProductFacade facade;
 
-	public HashMap findById(String id) {
+	public HashMap findById(String id) throws EntityNotFoundException {
 		return facade.getProduct(id);
 	}
 

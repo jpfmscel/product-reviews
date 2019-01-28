@@ -17,13 +17,14 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository repository;
 
-	public ReviewsDTO getReviewsGeneralData(String productId) throws EntityNotFoundException{
+	public ReviewsDTO getReviewsGeneralData(String productId) throws EntityNotFoundException {
 		Optional<List<Review>> reviewsByProductId = Optional.ofNullable(repository.findByProductId(productId));
 		if (!reviewsByProductId.isPresent()) {
 			throw new EntityNotFoundException();
 		}
 
-		Double averageScore = reviewsByProductId.stream().mapToDouble(Review::getScore).average().orElse(Double.NaN);
+		Double averageScore = reviewsByProductId.get().stream().mapToDouble(Review::getScore).average()
+				.orElse(Double.NaN);
 		ReviewsDTO reviewDTO = ReviewsDTO.builder().productId(productId).quantity(reviewsByProductId.stream().count())
 				.averageScore(averageScore).build();
 
