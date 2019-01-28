@@ -1,6 +1,7 @@
 package com.adidas.reviewservice.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -16,15 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adidas.reviewservice.dto.GenericResponse;
 import com.adidas.reviewservice.dto.ReviewsDTO;
 import com.adidas.reviewservice.entities.Review;
+import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.repositories.ReviewRepository;
 import com.adidas.reviewservice.services.ReviewService;
 
 //@Secured
 @RestController
 @RequestMapping(path = "/api/review")
-public class ReviewController {
+public class ReviewController implements GenericController {
 
 	@Autowired
 	private ReviewRepository repository;
@@ -33,15 +36,24 @@ public class ReviewController {
 	private ReviewService service;
 
 	@GetMapping
-	public ResponseEntity<List<Review>> getReviews() {
-		List<Review> productReviews = repository.findAll();
-		return ResponseEntity.ok(productReviews);
+	public ResponseEntity<GenericResponse> getReviews() throws EntityNotFoundException {
+		Optional<List<Review>> productReviews = Optional.ofNullable(repository.findAll());
+		if (!productReviews.isPresent()) {
+			throw new EntityNotFoundException();
+		}
+		return ResponseEntity.ok(buildGenericResponseOK(productReviews.get()));
 	}
 
-	@GetMapping(value = "/{product_id}")
-	public ResponseEntity<ReviewsDTO> getReviewsByProductId(@PathVariable @NotNull String product_id) {
-		ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(product_id);
-		return ResponseEntity.ok(reviewsGeneralData);
+//	@Cacheable(value = "reviews", key = "#productId")
+	@GetMapping(value = "/{productId}")
+	public ResponseEntity<GenericResponse> getReviewsByProductId(@PathVariable @NotNull String productId) {
+		try {
+			ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(productId);
+			return ResponseEntity.ok(buildGenericResponseOK(reviewsGeneralData));
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(buildGenericResponseError(e));
+		}
 	}
 
 	// @Secured
@@ -62,7 +74,7 @@ public class ReviewController {
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity deleteReview(@PathVariable String id) {
 		repository.deleteById(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(buildGenericResponseOK("Deleted Review with id : " + id));
 	}
 
 }

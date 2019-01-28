@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.cache.annotation.Cacheable;
 import com.adidas.productservice.services.ProductService;
 import com.adidas.productservice.services.ReviewService;
 
@@ -29,12 +29,13 @@ public class ProductController {
 
 	// @Secured
 	@SuppressWarnings({ "rawtypes" })
-	@GetMapping(value = "/{id}")
-	public ResponseEntity findById(@PathVariable @NonNull String id) {
+	@GetMapping(value = "/{productId}")
+//	@Cacheable(value = "products", key = "#productId", unless = "#result.followers < 12000")
+	public ResponseEntity findById(@PathVariable @NonNull String productId) {
 		// try {
 
-		HashMap product = service.findById(id);
-		HashMap reviewGeneralData = reviewService.getReviewGeneralData(id);
+		HashMap product = service.findById(productId);
+		HashMap reviewGeneralData = reviewService.getReviewGeneralData(productId);
 
 		HashMap result = new HashMap();
 		result.put("product", product);
