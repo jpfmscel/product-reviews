@@ -19,6 +19,7 @@ import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.repositories.ReviewRepository;
 import com.adidas.reviewservice.services.ReviewService;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ReviewServiceApplication.class)
@@ -63,8 +64,13 @@ public class ReviewServiceApplicationTests {
 
 	@Test
 	public void d_getReviewsGeneralData() throws EntityNotFoundException {
+		ReviewsDTO rDTO = mock(ReviewsDTO.class);
+		
+		
 		ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(review.getProductId());
 
+		
+		
 		assertTrue("Product ID is not the same.", reviewsGeneralData.getProductId().equals(review.getProductId()));
 		assertTrue("Average score is not correct.", reviewsGeneralData.getAverageScore().compareTo(new Double(3)) == 0);
 		assertTrue("Quantity of reviews is not correct.", reviewsGeneralData.getQuantity().intValue() == 1);

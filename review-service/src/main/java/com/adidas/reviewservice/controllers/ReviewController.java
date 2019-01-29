@@ -1,6 +1,7 @@
 package com.adidas.reviewservice.controllers;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,8 +39,11 @@ public class ReviewController {
 	@Autowired
 	private ReviewService service;
 
+	@Autowired ResourceBundleMessageSource messageSource;
+	
 	@GetMapping
 	public ResponseEntity<GenericResponse> getReviews() throws EntityNotFoundException {
+		System.out.println(messageSource.getMessage("welcome", null, Locale.ENGLISH));
 		Optional<List<Review>> productReviews = Optional.ofNullable(repository.findAll());
 		if (!productReviews.isPresent()) {
 			throw new EntityNotFoundException();
