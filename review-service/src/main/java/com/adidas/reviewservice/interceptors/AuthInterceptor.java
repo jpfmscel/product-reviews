@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.adidas.reviewservice.annotations.Secured;
 import com.adidas.reviewservice.services.AuthService;
+import com.adidas.reviewservice.util.GenericResponseUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
 public class AuthInterceptor implements HandlerInterceptor {
@@ -21,6 +23,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 	private static final String API_PREFIX = "/api/";
 
 	Logger logger = Logger.getLogger(AuthInterceptor.class);
+
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Autowired
 	private AuthService authService;
@@ -40,36 +45,26 @@ public class AuthInterceptor implements HandlerInterceptor {
 		}
 
 		if (shouldVerifyURL && shouldVerifyMethod) {
-			return verifyToken(request, response);
+			return isTokenValid(request, response);
 		}
 
 		return true;
 	}
 
-	private boolean verifyToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String authorization = request.getHeader("Authorization");
-		if (StringUtils.isEmpty(authorization) || !authorization.contains("Bearer ")) {
-			fillResponse(response, 401, "Token not provided.");
-			return false;
-		}
-
-		String token = authorization.split("Bearer ")[1];
-		logger.info("Authorization header : " + authorization);
-		logger.info("Token : " + token);
+	private boolean isTokenValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			// TODO
-			authService.isTokenValid(token);
+			return authService.isTokenValid(request);
 		} catch (Exception e) {
-			e.printStackTrace();
-			fillResponse(response, 401, "Token is invalid.");
+			fillResponse(response, 401, e.getMessage());
 			return false;
 		}
-		return true;
 	}
 
 	private void fillResponse(HttpServletResponse response, int status, String message) throws IOException {
 		response.setStatus(status);
-		response.getOutputStream().print(message);
+		response.addHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+		response.getOutputStream()
+				.print(objectMapper.writeValueAsString(GenericResponseUtils.buildGenericResponseError(message)));
 		response.getOutputStream().flush();
 	}
 

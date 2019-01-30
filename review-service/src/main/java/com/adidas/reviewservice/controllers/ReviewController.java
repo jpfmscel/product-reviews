@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adidas.reviewservice.annotations.Secured;
 import com.adidas.reviewservice.dto.GenericResponse;
 import com.adidas.reviewservice.dto.ReviewsDTO;
 import com.adidas.reviewservice.entities.Review;
@@ -26,7 +27,6 @@ import com.adidas.reviewservice.repositories.ReviewRepository;
 import com.adidas.reviewservice.services.ReviewService;
 import com.adidas.reviewservice.util.GenericResponseUtils;
 
-//@Secured
 @RestController
 @RequestMapping(path = "/api/review")
 public class ReviewController {
@@ -58,20 +58,21 @@ public class ReviewController {
 		}
 	}
 
-	// @Secured
+	@Secured
 	@PostMapping
 	public ResponseEntity<GenericResponse> insertReview(@RequestBody @Valid Review review) {
 		Review reviewInserted = repository.insert(review);
 		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(reviewInserted));
 	}
 
-	// @Secured
+	@Secured
 	@PutMapping
 	public ResponseEntity<GenericResponse> updateReview(@RequestBody @Valid Review review) {
 		Review reviewUpdated = repository.save(review);
 		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(reviewUpdated));
 	}
 
+	@Secured
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<GenericResponse> deleteReview(@PathVariable String id) {
 		repository.deleteById(id);

@@ -17,4 +17,8 @@ public class GenericResponseUtils {
 	public static GenericResponse buildGenericResponseError(Throwable t) {
 		return GenericResponse.builder().status("error").code(400).messages(Arrays.asList(t.getMessage())).build();
 	}
+	
+	public static GenericResponse buildGenericResponseError(String message) {
+		return GenericResponse.builder().status("error").code(400).messages(Arrays.asList(message)).build();
+	}
 }
