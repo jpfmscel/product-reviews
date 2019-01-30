@@ -23,20 +23,6 @@ Navigate to the folder containing the docker-compose.yml file and run the follow
   - Review service  : http://localhost:8083/swagger-ui.html
 
 
-* [ ] Develop this application with a microservice approach, all services should run independently.
-* [ ] Write API tests for your endpoints.
-* [ ] Provide API documentation using swagger or similar.
-* [ ] Every person having Java and some standard tools should be able to check out the code, build
-and run the app locally (both Gradle and Maven accepted).
-* [ ] Ensure the design is taking into consideration the SLAs and response times.
-* [ ] Please, use English as a documentation language.
-* [ ] When you are done, check your solution into any public GIT repo (e.g. GitHub or Bitbucket) and
-send us the link.
-
-* [ ] BONUS 1: Dockerize the two component services and create config files for deploying them.
-* [ ] BONUS 2: Create a CI/CD pipeline proposal for the app.
-* [ ] BONUS 3: Create a test integration suite for both services.
-
 ## Possible Future Enhacements
 - Enhanced caching (Redis, Caffeine, Inifinspan...);
 - Enhanced security using API gateway for microservices communication using JWT and API Tokens;
