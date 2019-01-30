@@ -21,9 +21,9 @@ public class ReviewProcessingTest {
 		List<Review> list = getReviews();
 		ReviewsDTO processReviews = revService.processReviews("123", list);
 
-		assertEquals(processReviews.getQuantity(), Long.valueOf(list.size()));
-		assertEquals(processReviews.getAverageScore(), Double.valueOf(3));
-		assertEquals(processReviews.getProductId(), "123");
+		assertEquals(Long.valueOf(list.size()), processReviews.getQuantity());
+		assertEquals(Double.valueOf(3), processReviews.getAverageScore());
+		assertEquals("123", processReviews.getProductId());
 	}
 
 	@Test
@@ -33,13 +33,24 @@ public class ReviewProcessingTest {
 		List<Review> list = getReviews();
 		list.add(Review.builder().productId("123").score(1).build());
 		ReviewsDTO processReviews = revService.processReviews("123", list);
-		
-		assertEquals(processReviews.getQuantity(), Long.valueOf(list.size()));
-		assertEquals(processReviews.getAverageScore(), Double.valueOf(2.67));
-		assertEquals(processReviews.getProductId(), "123");
+
+		assertEquals(Long.valueOf(list.size()), processReviews.getQuantity());
+		assertEquals(Double.valueOf(2.67), processReviews.getAverageScore());
+		assertEquals("123", processReviews.getProductId());
 	}
 
-	
+	@Test
+	public void shouldProcessReviewsAndReturnEmptyReviewData() throws EntityNotFoundException {
+		ReviewService revService = new ReviewService();
+
+		List<Review> list = getReviews();
+		ReviewsDTO processReviews = revService.processReviews("000", list);
+
+		assertEquals(Long.valueOf(0), processReviews.getQuantity());
+		assertEquals(Double.valueOf(0), processReviews.getAverageScore());
+		assertEquals("000", processReviews.getProductId());
+	}
+
 	private List<Review> getReviews() {
 		List<Review> reviews = new ArrayList<Review>();
 		reviews.add(Review.builder().productId("123").score(3).build());

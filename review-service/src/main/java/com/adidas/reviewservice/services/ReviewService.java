@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.adidas.reviewservice.dto.ReviewsDTO;
 import com.adidas.reviewservice.entities.Review;
@@ -29,14 +30,20 @@ public class ReviewService {
 	}
 
 	public ReviewsDTO processReviews(String productId, List<Review> reviewsByProductId) {
-		Double averageScore = reviewsByProductId.stream().mapToDouble(Review::getScore).average().orElse(Double.NaN);
-
-		if (averageScore.compareTo(Double.NaN) != 0) {
-			averageScore = round(averageScore, 2);
+		if (!StringUtils.hasText(productId)) {
+			throw new IllegalArgumentException("Invalid Product ID");
 		}
 
-		ReviewsDTO reviewDTO = ReviewsDTO.builder().productId(productId).quantity(reviewsByProductId.stream().count())
-				.averageScore(averageScore).build();
+		Double averageScore = reviewsByProductId.stream().filter(review -> productId.equals(review.getProductId()))
+				.mapToDouble(Review::getScore).average().orElse(Double.valueOf(0));
+
+		averageScore = round(averageScore, 2);
+
+		long count = reviewsByProductId.stream().filter(review -> productId.equals(review.getProductId())).count();
+
+		ReviewsDTO reviewDTO = ReviewsDTO.builder().productId(productId).quantity(count).averageScore(averageScore)
+				.build();
+
 		return reviewDTO;
 	}
 

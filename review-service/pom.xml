@@ -47,11 +47,6 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
@@ -90,6 +85,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -97,31 +93,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.github.joelittlejohn.embedmongo</groupId>
-				<artifactId>embedmongo-maven-plugin</artifactId>
-				<version>0.4.1</version>
-				<executions>
-					<execution>
-						<id>start</id>
-						<goals>
-							<goal>start</goal>
-						</goals>
-						<configuration>
-							<port>27017</port>
-							<version>3.6.3</version>
-							<databaseDirectory>${project.build.directory}/mongotest</databaseDirectory>
-							<bindIp>127.0.0.1</bindIp>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop</id>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
