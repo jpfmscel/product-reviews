@@ -12,7 +12,7 @@ import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.services.ReviewService;
 
-public class ReviewTest {
+public class ReviewProcessingTest {
 
 	@Test
 	public void shouldProcessReviewsAndReturnIntegerAverage() throws EntityNotFoundException {
