@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.Charset;
 import java.time.Duration;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.adidas.productservice.exceptions.EntityNotFoundException;
+import com.adidas.productservice.util.GenericResponseUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -31,11 +33,14 @@ public class ProductFacadeRestImpl implements ProductFacade {
 			HttpRequest request = HttpRequest.newBuilder().uri(new URI(uri)).version(HttpClient.Version.HTTP_2).GET()
 					.build();
 			HttpClient client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build();
-			String response = client.send(request, BodyHandlers.ofString(Charset.forName("UTF-8"))).body();
-			HashMap readValue = jacksonObjectMapper.readValue(response, HashMap.class);
-
-			if (readValue.get("message") != null) {
-				throw new EntityNotFoundException();
+			HttpResponse<String> response = client.send(request, BodyHandlers.ofString(Charset.forName("UTF-8")));
+			String responseBody = response.body();
+			HashMap readValue = jacksonObjectMapper.readValue(responseBody, HashMap.class);
+			if (response.statusCode() >= 400) {
+				if (response.statusCode() == 404) {
+					throw new EntityNotFoundException();
+				}
+				return readValue;
 			}
 
 			return readValue;
