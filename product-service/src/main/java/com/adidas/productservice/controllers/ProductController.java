@@ -37,7 +37,7 @@ public class ProductController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping(value = "/{productId}")
-	@Cacheable(value = "products", key = "#productId")
+//	@Cacheable(value = "products", key = "#productId")
 	public ResponseEntity findById(@PathVariable @NonNull String productId) throws EntityNotFoundException,
 			ConfigurationException, InterruptedException, ExecutionException, TimeoutException {
 
