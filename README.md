@@ -13,7 +13,7 @@ SpringBoot application for products and reviews
 - ```CircleCI``` as Continuous Integration pipeline  
 - ```Swagger``` documentation available at **/swagger-ui.html**
 - ```JUnit``` for unit testing
-- ```SpringBoot Actuator``` 
+- ```SpringBoot Actuator``` for service health monitoring
 - ```i18n``` ready ([review-service messages folder](https://github.com/jpfmscel/product-reviews/tree/master/review-service/src/main/resources/messages) and [product-service messages folder](https://github.com/jpfmscel/product-reviews/tree/master/product-service/src/main/resources/messages))
 
 ## Requirements
