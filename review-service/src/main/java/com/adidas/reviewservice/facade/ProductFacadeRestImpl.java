@@ -1,4 +1,4 @@
-package com.adidas.productservice.facade;
+package com.adidas.reviewservice.facade;
 
 import java.io.IOException;
 import java.net.URI;

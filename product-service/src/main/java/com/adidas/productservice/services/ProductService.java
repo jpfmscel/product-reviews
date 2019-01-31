@@ -15,7 +15,7 @@ public class ProductService {
 
 	@Autowired
 	@Qualifier("productFacadeRestImpl")
-	protected ProductFacade facade;
+	private ProductFacade facade;
 
 	@Cacheable(value = "products", key="#productId")
 	public HashMap findById(String productId) throws EntityNotFoundException {

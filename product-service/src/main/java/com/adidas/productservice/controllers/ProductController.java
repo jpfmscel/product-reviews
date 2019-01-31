@@ -7,7 +7,6 @@ import java.util.concurrent.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +24,6 @@ import com.adidas.productservice.services.ReviewService;
 @RequestMapping(path = "/api/product")
 public class ProductController {
 
-	private final HttpStatus ok = HttpStatus.OK;
-
 	@Autowired
 	private ProductService service;
 
@@ -41,7 +38,7 @@ public class ProductController {
 
 		HashMap product = new HashMap(0);
 
-		CompletableFuture.supplyAsync(() -> {
+		CompletableFuture future = CompletableFuture.supplyAsync(() -> {
 			try {
 				return service.findById(productId);
 			} catch (EntityNotFoundException e) {
@@ -52,6 +49,8 @@ public class ProductController {
 
 		ReviewsDTO reviewGeneralData = reviewService.getReviewsGeneralData(productId);
 
+		future.get();
+
 		if (product.isEmpty()) {
 			throw new EntityNotFoundException("No product found for id = " + productId);
 		}
@@ -59,7 +58,7 @@ public class ProductController {
 		HashMap result = new HashMap();
 		result.put("product", product);
 		result.put("reviews", reviewGeneralData);
-		return new ResponseEntity<Object>(result, ok);
+		return ResponseEntity.ok(result);
 	}
 
 	private void setFutureValue(HashMap result, HashMap map) {

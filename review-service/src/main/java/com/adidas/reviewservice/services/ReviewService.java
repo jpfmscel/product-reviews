@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.adidas.productservice.facade.ProductFacade;
 import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
+import com.adidas.reviewservice.facade.ProductFacade;
 import com.adidas.reviewservice.repositories.ReviewRepository;
 
 @Service
