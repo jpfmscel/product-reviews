@@ -18,6 +18,6 @@ public class GenericResponse {
 	private String status;
 	private Integer code;
 	private List<String> messages;
-	private Object result;
+	private Object data;
 	
 }

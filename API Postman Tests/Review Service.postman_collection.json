@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "5715d7aa-8a97-4b1d-9555-3fe36d99dbed",
+		"name": "Review Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8083/api/review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9021fb50-1c20-41a9-a28f-4784eaca6ff1",
+						"exec": [
+							"pm.test('Some test name', function () {",
+							"\tpm.response.to.have.status(200);",
+							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8083/api/review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6cf9329b-1eb2-460d-9234-d944a5b45b2c",
+						"exec": [
+							"pm.test('Some test name', function () {",
+							"\tpm.response.to.have.status(200);",
+							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRpZGFz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"description\": \"Teste Post Review\",\n  \"productId\": \"123\",\n  \"score\": 5,\n  \"title\": \"Title Post Review\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8083/api/review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef4603bd-056a-4bd2-8ca9-d33cdf766db3",
+						"exec": [
+							"pm.test('Some test name', function () {",
+							"\tpm.response.to.have.status(200);",
+							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRpZGFz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"5c521db7daeb660bf080a24e\",\n        \"title\": \"Title Post Review UPDATE\",\n        \"description\": \"Teste Post Review UPDATE\",\n        \"score\": 5,\n        \"productId\": \"123\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8083/api/review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e79127ce-cf8f-4631-87c5-33c383f163c7",
+						"exec": [
+							"pm.test('Some test name', function () {",
+							"\tpm.response.to.have.status(200);",
+							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRpZGFz",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/review/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"review",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8083/api/review/productId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d079cf09-501c-439f-8cda-1f7b587ba620",
+						"exec": [
+							"pm.test('Some test name', function () {",
+							"\tpm.response.to.have.status(200);",
+							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8083/api/review/123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"api",
+						"review",
+						"123"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

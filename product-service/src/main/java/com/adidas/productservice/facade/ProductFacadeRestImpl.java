@@ -26,8 +26,8 @@ public class ProductFacadeRestImpl implements ProductFacade {
 	@Autowired
 	private ObjectMapper jacksonObjectMapper;
 
-	public HashMap getProduct(String code) throws EntityNotFoundException {
-		String uri = API_PRODUCTS + code;
+	public HashMap getProduct(String productId) throws EntityNotFoundException {
+		String uri = API_PRODUCTS + productId;
 
 		try {
 			HttpRequest request = HttpRequest.newBuilder().uri(new URI(uri)).version(HttpClient.Version.HTTP_2).GET()
@@ -38,7 +38,7 @@ public class ProductFacadeRestImpl implements ProductFacade {
 			HashMap readValue = jacksonObjectMapper.readValue(responseBody, HashMap.class);
 			if (response.statusCode() >= 400) {
 				if (response.statusCode() == 404) {
-					throw new EntityNotFoundException();
+					throw new EntityNotFoundException("No product found for id = " + productId);
 				}
 				return readValue;
 			}

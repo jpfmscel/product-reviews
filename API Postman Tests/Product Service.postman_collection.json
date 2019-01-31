@@ -1,0 +1,55 @@
+{
+	"info": {
+		"_postman_id": "804211ab-4f50-41d9-b0a7-84d09c0a6e1c",
+		"name": "Product Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8082/api/product/{productId}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9021fb50-1c20-41a9-a28f-4784eaca6ff1",
+						"exec": [
+							"pm.test('Get reviews of a product', function () {",
+							"\tpm.response.to.have.status(200);",
+							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
+							"\t",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reviews).to.not.eq(null);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8082/api/product/AC7836",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"product",
+						"AC7836"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,7 +1,5 @@
 package com.adidas.reviewservice.controllers.advices;
 
-import java.util.Arrays;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,6 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.adidas.reviewservice.dto.GenericResponse;
 import com.adidas.reviewservice.exceptions.ConfigurationException;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
+import com.adidas.reviewservice.util.GenericResponseUtils;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -28,8 +27,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	private ResponseEntity<GenericResponse> buildGenericResponse(Exception e) {
-		return ResponseEntity.badRequest().body(
-				GenericResponse.builder().status("error").code(400).messages(Arrays.asList(e.getMessage())).build());
+		return ResponseEntity.badRequest().body(GenericResponseUtils.buildGenericResponseError(e));
 	}
 
 }

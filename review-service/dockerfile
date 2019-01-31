@@ -10,7 +10,7 @@ ADD src /opt/review-service/build/src/
 
 WORKDIR /opt/review-service/build/
 
-RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package
 
 FROM openjdk:11.0.2-jdk-oracle
 # Maven build is mandatory before copying jar file : $ ./mvnw clean package

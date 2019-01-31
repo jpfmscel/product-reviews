@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,11 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.adidas.reviewservice.annotations.Secured;
 import com.adidas.reviewservice.dto.GenericResponse;
-import com.adidas.reviewservice.dto.ReviewsDTO;
 import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.repositories.ReviewRepository;
-import com.adidas.reviewservice.services.ReviewService;
 import com.adidas.reviewservice.util.GenericResponseUtils;
 
 @RestController
@@ -34,28 +33,14 @@ public class ReviewController {
 	@Autowired
 	private ReviewRepository repository;
 
-	@Autowired
-	private ReviewService service;
-
 	@GetMapping
+	@Cacheable(value = "reviews-all", key = "#productId")
 	public ResponseEntity<GenericResponse> getReviews() throws EntityNotFoundException {
-		Optional<List<Review>> productReviews = Optional.ofNullable(repository.findAll());
-		if (!productReviews.isPresent()) {
-			throw new EntityNotFoundException();
+		List<Review> productReviews = repository.findAll();
+		if (productReviews.isEmpty()) {
+			throw new EntityNotFoundException("No reviews found.");
 		}
-		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(productReviews.get()));
-	}
-
-	@Cacheable(value = "reviews", key = "#productId")
-	@GetMapping(value = "/{productId}")
-	public ResponseEntity<GenericResponse> getReviewsByProductId(@PathVariable @NotNull String productId) {
-		try {
-			ReviewsDTO reviewsGeneralData = service.getReviewsGeneralData(productId);
-			return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(reviewsGeneralData));
-		} catch (EntityNotFoundException e) {
-			e.printStackTrace();
-			return ResponseEntity.badRequest().body(GenericResponseUtils.buildGenericResponseError(e));
-		}
+		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK(productReviews));
 	}
 
 	@Secured
@@ -74,9 +59,19 @@ public class ReviewController {
 
 	@Secured
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<GenericResponse> deleteReview(@PathVariable String id) {
-		repository.deleteById(id);
+	public ResponseEntity<GenericResponse> deleteReview(@PathVariable String id) throws EntityNotFoundException {
+		Optional<Review> findById = repository.findById(id);
+		if (findById.isPresent()) {
+			repository.deleteById(id);
+		} else {
+			throw new EntityNotFoundException("Review with id = " + id + " not found.");
+		}
 		return ResponseEntity.ok(GenericResponseUtils.buildGenericResponseOK("Deleted Review with id : " + id));
+	}
+
+	@CacheEvict(allEntries = true)
+	@Scheduled(fixedDelay = 1000)
+	public void cacheEvict() {
 	}
 
 }

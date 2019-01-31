@@ -1,4 +1,4 @@
-package com.adidas.reviewservice.test;
+package tests;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.adidas.reviewservice.dto.ReviewsDTO;
-import com.adidas.reviewservice.entities.Review;
-import com.adidas.reviewservice.exceptions.EntityNotFoundException;
-import com.adidas.reviewservice.services.ReviewService;
+import com.adidas.productservice.dto.ReviewsDTO;
+import com.adidas.productservice.entities.Review;
+import com.adidas.productservice.exceptions.EntityNotFoundException;
+import com.adidas.productservice.services.ReviewService;
 
 public class ReviewProcessingTest {
 
