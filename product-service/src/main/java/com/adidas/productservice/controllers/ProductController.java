@@ -1,7 +1,6 @@
 package com.adidas.productservice.controllers;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.adidas.productservice.dto.ReviewsDTO;
-import com.adidas.productservice.entities.Review;
 import com.adidas.productservice.exceptions.ConfigurationException;
 import com.adidas.productservice.exceptions.EntityNotFoundException;
 import com.adidas.productservice.services.ProductService;
@@ -37,13 +35,13 @@ public class ProductController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping(value = "/{productId}")
-//	@Cacheable(value = "products", key = "#productId")
+	@Cacheable(value = "products", key = "#productId")
 	public ResponseEntity findById(@PathVariable @NonNull String productId) throws EntityNotFoundException,
 			ConfigurationException, InterruptedException, ExecutionException, TimeoutException {
 
 		HashMap product = new HashMap(0);
 
-		CompletableFuture productFuture = CompletableFuture.supplyAsync(() -> {
+		CompletableFuture.supplyAsync(() -> {
 			try {
 				return service.findById(productId);
 			} catch (EntityNotFoundException e) {
@@ -51,8 +49,12 @@ public class ProductController {
 				return null;
 			}
 		}).thenAcceptAsync(result -> setFutureValue(result, product));
-		
+
 		ReviewsDTO reviewGeneralData = reviewService.getReviewsGeneralData(productId);
+
+		if (product.isEmpty()) {
+			throw new EntityNotFoundException("No product found for id = " + productId);
+		}
 
 		HashMap result = new HashMap();
 		result.put("product", product);
