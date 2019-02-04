@@ -48,5 +48,5 @@ Swagger documentation available for both services (after docker startup)
 - Enhanced Service Discovery through technologies such as Eureka;
 - Optimize Docker setup, improving cache of maven dependencies and reusable containers;
 - API monitoring through visual interface technologies such as Prometheus;
-- Self management through technologies such as Kubernetes;-
+- Self management through technologies such as Kubernetes;
 - Enhanced i18n by adding and improving feedback messages, in order to provide better UX (User eXperience)
