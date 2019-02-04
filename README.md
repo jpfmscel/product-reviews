@@ -10,7 +10,7 @@ SpringBoot application for products and reviews
 - ```Review Service``` : microservice responsible for managing review data
 - ```MongoDB``` as database
 - ```Caffeine``` for caching
-- ```Docker Compose``` orchestrates the containers
+- ```Docker Compose``` builds and starts the docker images
 - ```CircleCI``` as Continuous Integration pipeline  
 - ```Swagger``` documentation available at **/swagger-ui.html**
 - ```JUnit``` for unit testing
