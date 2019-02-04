@@ -5,6 +5,7 @@ SpringBoot application for products and reviews
 
 ## Architecture
 - ```Java 11.0.2```
+- ```Maven (wrapper)```
 - ```Product Service``` : microservice responsible for retrieving product and review data
 - ```Review Service``` : microservice responsible for managing review data
 - ```MongoDB``` as database
