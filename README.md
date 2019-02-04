@@ -50,3 +50,4 @@ Swagger documentation available for both services (after docker startup)
 - API monitoring through visual interface technologies such as Prometheus;
 - Self management through technologies such as Kubernetes;
 - Enhanced i18n by adding and improving feedback messages, in order to provide better UX (User eXperience)
+- Improve integration and unit tests with broader coverage
