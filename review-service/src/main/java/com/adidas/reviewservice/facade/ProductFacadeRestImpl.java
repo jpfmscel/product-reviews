@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +27,9 @@ public class ProductFacadeRestImpl implements ProductFacade {
 	private ObjectMapper jacksonObjectMapper;
 
 	public HashMap getProduct(String productId) throws EntityNotFoundException {
+		if (!StringUtils.hasText(productId)) {
+			throw new EntityNotFoundException("Product id not provided.");
+		}
 		String uri = API_PRODUCTS + productId;
 
 		try {

@@ -8,12 +8,20 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.adidas.reviewservice.entities.Review;
 import com.adidas.reviewservice.exceptions.EntityNotFoundException;
 import com.adidas.reviewservice.facade.ProductFacade;
 import com.adidas.reviewservice.repositories.ReviewRepository;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Service
 public class ReviewService {
 
@@ -38,12 +46,15 @@ public class ReviewService {
 		return repository.save(review);
 	}
 
-	public void deleteReview(String id) throws EntityNotFoundException {
-		Optional<Review> findById = repository.findById(id);
+	public void deleteReview(String reviewId) throws EntityNotFoundException {
+		if (!StringUtils.hasText(reviewId)) {
+			throw new EntityNotFoundException("Review ID not provided.");
+		}
+		Optional<Review> findById = repository.findById(reviewId);
 		if (findById.isPresent()) {
-			repository.deleteById(id);
+			repository.deleteById(reviewId);
 		} else {
-			throw new EntityNotFoundException("Review with id = " + id + " not found.");
+			throw new EntityNotFoundException("Review with id = " + reviewId + " not found.");
 		}
 	}
 }
