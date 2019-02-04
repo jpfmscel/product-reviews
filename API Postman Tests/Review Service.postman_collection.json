@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a61816f9-b112-43ab-8aa1-4c5d9eb35c73",
+		"_postman_id": "2a00a79d-1284-441b-830b-c29a10ea9880",
 		"name": "Review Service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,7 +13,7 @@
 					"script": {
 						"id": "9021fb50-1c20-41a9-a28f-4784eaca6ff1",
 						"exec": [
-							"pm.test('GET All Should return status 200 below 250ms', function () {",
+							"pm.test('GET All Should return status 200 up to 300ms', function () {",
 							"\tpm.response.to.have.status(200);",
 							"\tpm.expect(pm.response.responseTime).to.be.below(300);",
 							"})"
@@ -57,7 +57,6 @@
 						"exec": [
 							"pm.test('Some test name', function () {",
 							"\tpm.response.to.have.status(200);",
-							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
 							"})"
 						],
 						"type": "text/javascript"
@@ -258,7 +257,6 @@
 						"exec": [
 							"pm.test('Some test name', function () {",
 							"\tpm.response.to.have.status(200);",
-							"\tpm.expect(pm.response.responseTime).to.be.below(250);",
 							"})"
 						],
 						"type": "text/javascript"
